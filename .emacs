@@ -14,7 +14,7 @@
  '(show-paren-mode t)
  '(split-height-threshold 80)
  '(split-width-threshold 100)
- '(tab-width 2)
+ '(tab-width 4)
  '(user-full-name "bear")
  '(user-mail-address "jrjbear@gmail.com")
  '(which-function-mode t)
@@ -128,12 +128,11 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
-;;;; yasnippet
-;;(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+;; yasnippet
 (require 'yasnippet)
 (setq yas-snippet-dirs (cons "~/.emacs.d/snippets" yas-snippet-dirs))
 (yas/global-mode 1)
-;;
+
 ;; auto-complete
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20150618.1949/dict")
@@ -174,7 +173,11 @@
 
 ;; load google-c-styel
 (require 'google-c-style)
-(add-hook 'c++-mode-hook 'google-set-c-style)
+(defun my-google-set-c-style ()
+  (google-set-c-style)
+  (c-add-style "My-Google"
+               '("Google" (c-basic-offset . 4)) t))
+(add-hook 'c++-mode-hook 'my-google-set-c-style)
 (add-hook 'c++-mode-hook 'google-make-newline-indent)
 
 (require 'protobuf-mode)
