@@ -130,7 +130,7 @@
 
 ;; yasnippet
 (require 'yasnippet)
-(setq yas-snippet-dirs (cons "~/.emacs.d/snippets" yas-snippet-dirs))
+(setq yas-snippet-dirs "~/.emacs.d/snippets")
 (yas/global-mode 1)
 
 ;; auto-complete
@@ -181,7 +181,7 @@
 (add-hook 'c++-mode-hook 'google-make-newline-indent)
 
 (require 'protobuf-mode)
-(setq c-default-style (cons '(protobuf-mode . "Google") c-default-style))
+(add-hook 'protobuf-mode-hook 'my-google-set-c-style)
 
 ;; load highlight-symbol
 (require 'highlight-symbol)
