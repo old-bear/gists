@@ -182,6 +182,7 @@
 
 (require 'protobuf-mode)
 (add-hook 'protobuf-mode-hook 'my-google-set-c-style)
+;; (setq c-default-style (cons '(protobuf-mode . "Google") c-default-style))
 
 ;; load highlight-symbol
 (require 'highlight-symbol)
