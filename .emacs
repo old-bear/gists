@@ -113,6 +113,26 @@
 ;; more consistent with key binding of `next-error': C-x `
 (global-set-key (kbd "C-x ~") 'previous-error)
 
+(defun my-comment-code ()
+  (interactive)
+  (if (use-region-p)
+      (comment-region (region-beginning) (region-end) 2)
+    (comment-region (point-at-bol) (point-at-eol)) 2))
+(global-set-key (kbd "C-c c") 'my-comment-code)
+
+(defun my-uncomment-code ()
+  (interactive)
+  (if (use-region-p)
+      (comment-region (region-beginning) (region-end) -2)
+    (comment-region (point-at-bol) (point-at-eol) -2)))
+(global-set-key (kbd "C-c u") 'my-uncomment-code)
+
+(defun my-kill-line ()
+  (interactive)
+  (beginning-of-line)
+  (kill-line 1))
+(global-set-key (kbd "C-c w") 'my-kill-line)
+
 ;; bind M-n to semantic-ia-complete-symbol
 ;; (define-key senator-mode-map (kbd "M-n") 'semantic-ia-complete-symbol)
 

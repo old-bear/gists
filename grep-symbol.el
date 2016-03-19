@@ -7,10 +7,12 @@
         (grep-cmd "grep -nIH -e"))
     (if (null sym)
         (error "No symbol at point"))
+    ;; Find the root path of the project, which will be the directory to start grep
     (while (and (not (file-equal-p path "~/"))
                 (not (file-exists-p (concat path "Makefile")))
                 (not (file-exists-p (concat path "COMAKE")))
                 (not (file-exists-p (concat path "README")))
+                (not (file-exists-p (concat path "OWNER")))
                 (not (file-exists-p (concat path "build.sh")))
                 (not (file-exists-p (concat path "local_build.sh"))))
       (setq path (concat "../" path)))
@@ -22,9 +24,11 @@
     (setq grep-cmd (concat grep-cmd " '" sym 
                            (if recursive (concat "' -r " path) "' *")
                            " --exclude=*.svn-base"
+                           " --exclude=Makefile*"
                            " --exclude=*~"
                            " --exclude=*.tmp"
-                           " --exclude=*.html"))
+                           " --exclude=*.html"
+                           " --exclude_dir=output"))
     (add-to-history 'grep-history grep-cmd)
     (grep grep-cmd)))
 
