@@ -28,7 +28,7 @@ throughout the jump history"
     
 
 ;; load semantic-ia for semantic-ia-fast-jump
-;;(require 'semantic-ia)
+(require 'semantic)
 (defun my-semantic-jump-to ()
   (interactive)
   (let* ((item (my-make-ring-item)))

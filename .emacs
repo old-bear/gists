@@ -5,6 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(compilation-scroll-output (quote first-error))
+ '(ecb-layout-name "left15")
+ '(ecb-options-version "2.40")
  '(global-auto-revert-mode t)
  '(global-linum-mode t)
  '(ido-mode (quote both) nil (ido))
@@ -44,50 +46,16 @@
 (color-theme-initialize)
 (run-with-timer 2 nil 'color-theme-taming-mr-arneson)
 
-;; load cedet
-(load-file "~/Tools/cedet/cedet-devel-load.el")
-
-;; enable EDE
-;; (global-ede-mode t)
-
-;; enable srecode
-;; (global-srecode-minor-mode 1)
-
-;; semantic-idle-scheduler-mode
-;; semanticdb-minor-mode
-;; semanticdb-load-ebrowse-caches
-(semantic-load-enable-minimum-features)
-
-;; semantic-idle-summary-mode
-;; senator-minor-mode
-;; semantic-mru-bookmark-mode
-(semantic-load-enable-code-helpers)
-
-;; semantic-stickyfunc-mode
-;; semantic-decoration-mode
-;; semantic-idle-completions-mode
-;; (semantic-load-enable-guady-code-helpers)
-
-;; semantic-highlight-func-mode
-;; semantic-idle-local-symbol-highlight-mode
-;; semantic-decoration-on-*-members
-;; which-func-mode
-;; (semantic-load-enable-excessive-code-helpers)
-(global-semantic-idle-local-symbol-highlight-mode 1)
-
-;; semantic-highlight-edits-mode
-;; semantic-show-unmatched-syntax-mode
-;; semantic-show-parser-state-mode
-;; (semantic-load-enable-semantic-debugging-helpers)
-;; (global-semantic-highlight-edits-mode 1)
-(global-semantic-show-parser-state-mode 1)
-
-;; add imenu to menubar
-(defun imenu-semantic-hook ()
-  (imenu-add-to-menubar "TAGS"))
-(add-hook 'semantic-init-hooks 'imenu-semantic-hook)
-
-;;(require 'semantic-gcc)
+;; Turn on semantic globally first
+(semantic-mode t)
+;; This restricts semantic parsing only in some modes
+;; (add-to-list 'semantic-inhibit-functions
+;; 	     (lambda () (not (member major-mode
+;;                                  '(c-mode c++-mode)))))
+(setq semantic-default-submodes '(global-semanticdb-minor-mode
+                                  global-semantic-idle-scheduler-mode
+                                  global-semantic-idle-summary-mode
+                                  global-semantic-show-parser-state-mode))
 
 ;; add include directorys to cedet
 (defconst cedet-user-include-dirs
@@ -102,10 +70,6 @@
           (semantic-add-system-include dir 'c++-mode)
           (semantic-add-system-include dir 'c-mode))
         include-dirs))
-
-;; add gcc symbol file to semantic preprocessor and then reset the symbol map
-;;(add-to-list 'semantic-lex-c-preprocessor-symbol-file "/usr/include/sys/cdefs.h")
-;;(semantic-c-reset-preprocessor-symbol-map)
 
 ;; `end' key seems to be remapped to `select' inside screen
 (global-set-key (kbd "<select>") 'move-end-of-line)
@@ -133,18 +97,6 @@
   (kill-line 1))
 (global-set-key (kbd "C-c w") 'my-kill-line)
 
-;; bind M-n to semantic-ia-complete-symbol
-;; (define-key senator-mode-map (kbd "M-n") 'semantic-ia-complete-symbol)
-
-;; bind C-c , k to senator-kill-tag
-;;(define-key senator-mode-map (kbd "C-c , k") 'senator-kill-tag)
-
-;; bind C-c , w to senator-copy-tag
-;;(define-key senator-mode-map (kbd "C-c , w") 'senator-copy-tag)
-
-;; bind C-c , y to senator-yank-tag
-;;(define-key senator-mode-map (kbd "C-c , y") 'senator-yank-tag)
-
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
@@ -162,7 +114,7 @@
 (setq ac-auto-start nil)
 ;; add semantic to ac-sources
 (defun ac-cc-mode-setup ()
-  (setq ac-sources (append '(;; ac-source-semantic 
+  (setq ac-sources (append '(ac-source-semantic 
                              ;; ac-source-semantic-raw
                              ac-source-yasnippet) ac-sources)))
 
@@ -184,9 +136,6 @@
 ;; load calc-mode
 (require 'calc-mode)
 
-;; load php-mode
-(require 'php-mode)
-
 ;; load linum+
 (require 'linum+)
 (setq linum-format ["%%%dd "])
@@ -200,9 +149,8 @@
 (add-hook 'c++-mode-hook 'my-google-set-c-style)
 (add-hook 'c++-mode-hook 'google-make-newline-indent)
 
-(require 'protobuf-mode)
+;; protobuf-mode has been loaded by melpa
 (add-hook 'protobuf-mode-hook 'my-google-set-c-style)
-;; (setq c-default-style (cons '(protobuf-mode . "Google") c-default-style))
 
 ;; load highlight-symbol
 (require 'highlight-symbol)
@@ -225,3 +173,13 @@
 (require 'grep-symbol)
 (global-set-key (kbd "<f10>") 'grep-current-symbol)
 (global-set-key (kbd "<C-f10>") 'grep-current-symbol-recursive)
+
+;; activate ECB
+(ecb-activate)
+(setq ecb-source-path '("~/"))
+(ecb-hide-ecb-windows)
+(global-set-key (kbd "<f9>") 'ecb-toggle-ecb-windows)
+
+;; load smart-operator
+;; (require 'smart-operator)
+;; (semantic-toggle-minor-mode-globally 'smart-operator-mode 1)
