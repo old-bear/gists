@@ -44,7 +44,7 @@
 ;; apply color-theme
 (require 'color-theme)
 (color-theme-initialize)
-(run-with-timer 2 nil 'color-theme-taming-mr-arneson)
+(run-with-timer 2 nil 'color-theme-calm-forest)
 
 ;; Turn on semantic globally first
 (semantic-mode t)

@@ -26,7 +26,7 @@
 #   ------------------------------------------------------------
     export PATH="$PATH"
     
-    export JAVA_HOME="$(/usr/libexec/java_home)"
+#   export JAVA_HOME="$(/usr/libexec/java_home)"
     
 #   Set Default Editor (change 'Nano' to the editor of your choice)
 #   ------------------------------------------------------------
@@ -50,8 +50,8 @@
 #   -----------------------------
 
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
-alias ls='ls -G'                            # Preferred 'ls' implementation
-alias ll='ls -FGlAhp'                       # Preferred 'll' implementation
+alias ls='ls --color'                       # Preferred 'ls' implementation
+alias ll='ls -FlAhp'                        # Preferred 'll' implementation
 alias less='less -FSRXc'                    # Preferred 'less' implementation
 alias grep='grep --color=auto'              # Preferred 'grep' implementation
 cd() { builtin cd "$@"; ls; }               # Always list directory contents upon 'cd'
