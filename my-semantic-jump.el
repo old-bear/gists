@@ -8,8 +8,8 @@
 (defvar my-semantic-jump-map
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap (kbd "<f12>") 'my-semantic-jump-to)
-    (define-key keymap (kbd "ESC <left>") 'my-semantic-jump-prev)
-    (define-key keymap (kbd "ESC <right>") 'my-semantic-jump-next)
+    (define-key keymap (kbd "M-<left>") 'my-semantic-jump-prev)
+    (define-key keymap (kbd "M-<right>") 'my-semantic-jump-next)
     keymap)
   "Keymap used by `my-semantic-jump-mode'")
 

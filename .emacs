@@ -7,6 +7,7 @@
  '(compilation-scroll-output (quote first-error))
  '(ecb-layout-name "left15")
  '(ecb-options-version "2.40")
+ '(enable-local-variables nil)
  '(global-auto-revert-mode t)
  '(global-linum-mode t)
  '(ido-mode (quote both) nil (ido))
@@ -28,9 +29,9 @@
  ;; If there is more than one, they won't work right.
  '(linum ((t (:inherit default :foreground "white")))))
 
-;; bind .h file to c++-mode
+;; bind .h/.c file to c++-mode
 (setq auto-mode-alist
-      (append '(("\\.h$" . c++-mode)) auto-mode-alist))
+      (append '(("\\.h$" . c++-mode)) '(("\\.c$" . c++-mode)) auto-mode-alist))
 
 (require 'mwheel)
 (mouse-wheel-mode t)
@@ -149,7 +150,7 @@
 (add-hook 'c++-mode-hook 'my-google-set-c-style)
 (add-hook 'c++-mode-hook 'google-make-newline-indent)
 
-;; protobuf-mode has been loaded by melpa
+(require 'protobuf-mode)
 (add-hook 'protobuf-mode-hook 'my-google-set-c-style)
 
 ;; load highlight-symbol
@@ -172,14 +173,9 @@
 ;; bind F10 to grep the current symbol
 (require 'grep-symbol)
 (global-set-key (kbd "<f10>") 'grep-current-symbol)
-(global-set-key (kbd "<C-f10>") 'grep-current-symbol-recursive)
 
 ;; activate ECB
 (ecb-activate)
 (setq ecb-source-path '("~/"))
 (ecb-hide-ecb-windows)
 (global-set-key (kbd "<f9>") 'ecb-toggle-ecb-windows)
-
-;; load smart-operator
-;; (require 'smart-operator)
-;; (semantic-toggle-minor-mode-globally 'smart-operator-mode 1)
